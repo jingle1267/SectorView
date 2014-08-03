@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,6 +19,7 @@ public class SectorView extends ImageView {
 
 	private BitmapShader bitmapShader;
 	private Paint paint;
+	private Paint boundPaint;
 	
 	public SectorView(Context context) {
 		super(context);
@@ -36,6 +39,11 @@ public class SectorView extends ImageView {
 	private void init() {
 		paint = new Paint();
 		paint.setAntiAlias(true);
+		boundPaint = new Paint();
+		boundPaint.setAntiAlias(true);
+		boundPaint.setColor(Color.GRAY);
+		boundPaint.setStyle(Paint.Style.STROKE);
+		boundPaint.setStrokeWidth(5);
 	}
 	
 	@Override
@@ -50,13 +58,15 @@ public class SectorView extends ImageView {
 		if (bitmap.getHeight() == 0 || bitmap.getWidth() == 0)
 			return;
 
-		bitmapShader = new BitmapShader(bitmap, TileMode.CLAMP, TileMode.CLAMP);
 		paint.setShader(bitmapShader);
 		
 		float radius = Math.min(bitmap.getWidth(), bitmap.getHeight()) / 2;
 		
 		// canvas.drawBitmap(bitmap, 0, 0, null);
 		canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, radius, paint);
+		
+		// draw bound
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, radius, boundPaint);
 		
 	}
 
@@ -65,6 +75,7 @@ public class SectorView extends ImageView {
 		// TODO Auto-generated method stub
 		super.invalidate();
 		bitmap = drawableToBitmap(getDrawable());
+		bitmapShader = new BitmapShader(bitmap, TileMode.CLAMP, TileMode.CLAMP);
 	}
 
 	/**

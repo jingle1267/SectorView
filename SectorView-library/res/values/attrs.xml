@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SectorView">
+        <attr name="boundColor" format="color" />
+        <attr name="boundSize" format="dimension" />
+        <attr name="showBound" format="boolean" />
+    </declare-styleable>
+
+</resources>
